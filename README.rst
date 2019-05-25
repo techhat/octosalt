@@ -102,7 +102,9 @@ command from the Salt master:
 
 .. code-block:: bash
 
-    # salt octominion state.sls octosalt
+    # salt octopi state.sls octosalt
+
+In this example, ``octopi`` refers to the minion which will host the proxy.
 
 Then accept the key for the new proxy minion:
 
