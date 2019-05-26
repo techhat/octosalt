@@ -36,8 +36,19 @@ def list_users():
         salt octominion user.list_users
     '''
     url = '{0}/api/users'.format(__opts__['pillar']['proxy']['url'])
-    return salt.utils.http.query(
-        url, 'GET', opts=__opts__, decode=True, decode_type='json')['dict']
+    ret = []
+    data = salt.utils.http.query(
+        url,
+        'GET',
+        params={'apikey': __opts__['pillar']['proxy']['apikey']},
+        opts=__opts__,
+        decode=True,
+        decode_type='json',
+    )['dict']['users']
+    for user in data:
+        if user['user'] is True:
+            ret.append(user['name'])
+    return ret
 
 
 def add(name,
@@ -51,7 +62,7 @@ def add(name,
 
     .. code-block:: bash
 
-        salt octominion user.add name <password> <active> <admin>
+        salt octominion user.add <name> <password> <active> <admin>
     '''
     url = '{0}/api/users'.format(__opts__['pillar']['proxy']['url'])
     
@@ -64,8 +75,13 @@ def add(name,
             'active': active,
             'admin': admin,
         }),
+        params={'apikey': __opts__['pillar']['proxy']['apikey']},
+        header_dict={'Content-Type': 'application/json'},
+        status=True,
         opts=__opts__,
     )
+    if int(data['status']) != 200:
+        return False
     return True
 
 
@@ -79,8 +95,17 @@ def delete(name):
 
         salt octominion user.delete name remove=True force=True
     '''
-    url = '{0}/api/users{1}'.format(__opts__['pillar']['proxy']['url'], name)
-    salt.utils.http.query(url, 'DELETE', opts=__opts__)
+    url = '{0}/api/users/{1}'.format(__opts__['pillar']['proxy']['url'], name)
+    data = salt.utils.http.query(
+        url,
+        'DELETE',
+        params={'apikey': __opts__['pillar']['proxy']['apikey']},
+        header_dict={'Content-Type': 'application/json'},
+        status=True,
+        opts=__opts__,
+    )
+    if int(data['status']) != 200:
+        return False
     return True
 
 
@@ -96,7 +121,13 @@ def getent(refresh=False):
     '''
     url = '{0}/api/users'.format(__opts__['pillar']['proxy']['url'])
     return salt.utils.http.query(
-        url, 'GET', opts=__opts__, decode=True, decode_type='json')['dict']
+        url,
+        'GET',
+        params={'apikey': __opts__['pillar']['proxy']['apikey']},
+        opts=__opts__,
+        decode=True,
+        decode_type='json',
+    )['dict']['users']
 
 
 def info(name):
@@ -112,7 +143,13 @@ def info(name):
     try:
         url = '{0}/api/users/{1}'.format(__opts__['pillar']['proxy']['url'], name)
         data = salt.utils.http.query(
-            url, 'GET', opts=__opts__, decode=True, decode_type='json')['dict']
+            url,
+            'GET',
+            params={'apikey': __opts__['pillar']['proxy']['apikey']},
+            opts=__opts__,
+            decode=True,
+            decode_type='json',
+        )['dict']
         if not data:
             return {}
     except KeyError:
