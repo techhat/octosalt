@@ -36,7 +36,7 @@ def status():
     url = '{0}/api/printer'.format(__opts__['pillar']['proxy']['url'])
     return salt.utils.http.query(
         url,
-        'GET',
+        header_dict={'X-Api-Key': __opts__['pillar']['proxy']['apikey']},
         opts=__opts__,
         decode=True,
         decode_type='json',
@@ -56,7 +56,7 @@ def version():
     url = '{0}/api/version'.format(__opts__['pillar']['proxy']['url'])
     return salt.utils.http.query(
         url,
-        'GET',
+        header_dict={'X-Api-Key': __opts__['pillar']['proxy']['apikey']},
         opts=__opts__,
         decode=True,
         decode_type='json',
@@ -76,7 +76,7 @@ def connection():
     url = '{0}/api/connection'.format(__opts__['pillar']['proxy']['url'])
     return salt.utils.http.query(
         url,
-        'GET',
+        header_dict={'X-Api-Key': __opts__['pillar']['proxy']['apikey']},
         opts=__opts__,
         decode=True,
         decode_type='json',
@@ -120,6 +120,7 @@ def connect(
     return salt.utils.http.query(
         url,
         'POST',
+        header_dict={'X-Api-Key': __opts__['pillar']['proxy']['apikey']},
         data=json.dumps(data),
         opts=__opts__,
         decode=True,
@@ -142,6 +143,7 @@ def disconnect():
     return salt.utils.http.query(
         url,
         'POST',
+        header_dict={'X-Api-Key': __opts__['pillar']['proxy']['apikey']},
         data=json.dumps(data),
         opts=__opts__,
         decode=True,
