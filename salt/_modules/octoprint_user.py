@@ -40,7 +40,7 @@ def list_users():
     data = salt.utils.http.query(
         url,
         'GET',
-        params={'apikey': __opts__['pillar']['proxy']['apikey']},
+        header_dict={'X-Api-Key': __opts__['pillar']['proxy']['apikey']},
         opts=__opts__,
         decode=True,
         decode_type='json',
@@ -75,8 +75,10 @@ def add(name,
             'active': active,
             'admin': admin,
         }),
-        params={'apikey': __opts__['pillar']['proxy']['apikey']},
-        header_dict={'Content-Type': 'application/json'},
+        header_dict={
+            'X-Api-Key': __opts__['pillar']['proxy']['apikey'],
+            'Content-type': 'application/json',
+        },
         status=True,
         opts=__opts__,
     )
@@ -99,8 +101,10 @@ def delete(name):
     data = salt.utils.http.query(
         url,
         'DELETE',
-        params={'apikey': __opts__['pillar']['proxy']['apikey']},
-        header_dict={'Content-Type': 'application/json'},
+        header_dict={
+            'X-Api-Key': __opts__['pillar']['proxy']['apikey'],
+            'Content-type': 'application/json',
+        },
         status=True,
         opts=__opts__,
     )
@@ -123,7 +127,7 @@ def getent(refresh=False):
     return salt.utils.http.query(
         url,
         'GET',
-        params={'apikey': __opts__['pillar']['proxy']['apikey']},
+        header_dict={'X-Api-Key': __opts__['pillar']['proxy']['apikey']},
         opts=__opts__,
         decode=True,
         decode_type='json',
@@ -145,7 +149,7 @@ def info(name):
         data = salt.utils.http.query(
             url,
             'GET',
-            params={'apikey': __opts__['pillar']['proxy']['apikey']},
+            header_dict={'X-Api-Key': __opts__['pillar']['proxy']['apikey']},
             opts=__opts__,
             decode=True,
             decode_type='json',
