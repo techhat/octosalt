@@ -43,6 +43,7 @@ that looks like:
 
   /srv/
   +-- salt/
+      +-- _beacons/
       +-- _modules/
       +-- _proxy/
 
@@ -95,7 +96,7 @@ Salt master with the following content:
         - start: True
 
 In this example, ``octominion`` refers to the minion name by which Salt will
-refer to the OctoPrint server, and _not_ the minion which will host the proxy.
+refer to the OctoPrint server, and *not* the minion which will host the proxy.
 
 In order to start the proxy minion on the host minion, issue the following
 command from the Salt master:
