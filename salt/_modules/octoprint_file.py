@@ -42,7 +42,13 @@ def remove(path):
     url = '{0}/api/files/{1}'.format(__opts__['pillar']['proxy']['url'], path)
 
     return salt.utils.http.query(
-        url, 'DELETE', opts=__opts__, decode=True, decode_type='json')['dict']
+        url,
+        'DELETE',
+        header_dict={'X-Api-Key': __opts__['pillar']['proxy']['apikey']},
+        opts=__opts__,
+        decode=True,
+        decode_type='json',
+    )['dict']
 
 
 def readdir(path):
@@ -65,7 +71,7 @@ def readdir(path):
 
     data = salt.utils.http.query(
         url,
-        'GET',
+        header_dict={'X-Api-Key': __opts__['pillar']['proxy']['apikey']},
         opts=__opts__,
         decode=True,
         decode_type='json',
