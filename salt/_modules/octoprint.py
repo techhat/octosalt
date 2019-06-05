@@ -149,3 +149,133 @@ def disconnect():
         decode=True,
         decode_type='json',
     )['dict']
+
+
+def start():
+    '''
+    Start the loaded print
+
+    CLI Example:
+
+    .. code-block:: bash
+
+        salt octominion octoprint.start
+    '''
+    url = '{0}/api/job'.format(__opts__['pillar']['proxy']['url'])
+    data = salt.utils.http.query(
+        url,
+        header_dict={'X-Api-Key': __opts__['pillar']['proxy']['apikey']},
+        opts=__opts__,
+        data={'command': 'start'}
+    )
+    if int(data['status']) != 204:
+        return False
+    return True
+
+
+def stop():
+    '''
+    Stop the current print
+
+    CLI Example:
+
+    .. code-block:: bash
+
+        salt octominion octoprint.stop
+    '''
+    url = '{0}/api/job'.format(__opts__['pillar']['proxy']['url'])
+    data = salt.utils.http.query(
+        url,
+        header_dict={'X-Api-Key': __opts__['pillar']['proxy']['apikey']},
+        opts=__opts__,
+        data={'command': 'stop'}
+    )
+    if int(data['status']) != 204:
+        return False
+    return True
+
+
+def restart():
+    '''
+    Restart the current, paused print, from the beginning
+
+    CLI Example:
+
+    .. code-block:: bash
+
+        salt octominion octoprint.stop
+    '''
+    url = '{0}/api/job'.format(__opts__['pillar']['proxy']['url'])
+    data = salt.utils.http.query(
+        url,
+        header_dict={'X-Api-Key': __opts__['pillar']['proxy']['apikey']},
+        opts=__opts__,
+        data={'command': 'stop'}
+    )
+    if int(data['status']) != 204:
+        return False
+    return True
+
+
+def pause():
+    '''
+    Pause the current print
+
+    CLI Example:
+
+    .. code-block:: bash
+
+        salt octominion octoprint.pause
+    '''
+    url = '{0}/api/job'.format(__opts__['pillar']['proxy']['url'])
+    data = salt.utils.http.query(
+        url,
+        header_dict={'X-Api-Key': __opts__['pillar']['proxy']['apikey']},
+        opts=__opts__,
+        data={'command': 'pause', 'action': 'pause'}
+    )
+    if int(data['status']) != 204:
+        return False
+    return True
+
+
+def resume():
+    '''
+    Resume the paused print
+
+    CLI Example:
+
+    .. code-block:: bash
+
+        salt octominion octoprint.resume
+    '''
+    url = '{0}/api/job'.format(__opts__['pillar']['proxy']['url'])
+    data = salt.utils.http.query(
+        url,
+        header_dict={'X-Api-Key': __opts__['pillar']['proxy']['apikey']},
+        opts=__opts__,
+        data={'command': 'pause', 'action': 'resume'}
+    )
+    if int(data['status']) != 204:
+        return False
+    return True
+
+
+def job_status():
+    '''
+    Return OctoPrint job status
+
+    CLI Example:
+
+    .. code-block:: bash
+
+        salt octominion octoprint.status
+    '''
+    url = '{0}/api/job'.format(__opts__['pillar']['proxy']['url'])
+    return salt.utils.http.query(
+        url,
+        header_dict={'X-Api-Key': __opts__['pillar']['proxy']['apikey']},
+        opts=__opts__,
+        decode=True,
+        decode_type='json',
+    )['dict']
