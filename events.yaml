@@ -1,0 +1,174 @@
+events:
+  enabled: true
+  subscriptions:
+  - command: 'salt-call event.fire_master ''{{"status": "The server has started."}}'' octoprint/server/Startup'
+    event: Startup
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "The server is shutting down."}}'' octoprint/server/Shutdown'
+    event: Shutdown
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "A client has connected to the web server.", "remoteAddress": "{remoteAddress}"}}'' octoprint/server/ClientOpened'
+    event: ClientOpened
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "A client has disconnected from the webserver.", "remoteAddress": "{remoteAddress}"}}'' octoprint/server/ClientClosed'
+    event: ClientClosed
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "The servers internet connectivity changed.", "old": "{old}", "new": "{new}"}}'' octoprint/server/ConnectivityChanged'
+    event: ConnectivityChanged
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "The server is attempting to connect to the printer."}}'' octoprint/printer/Connecting'
+    event: Connecting
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "The server has connected to the printer.", "port": "{port}", "baudrate": "{baudrate}"}}'' octoprint/printer/Connected'
+    event: Connected
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "The server is going to disconnect from the printer."}}'' octoprint/printer/Disconnecting'
+    event: Disconnecting
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "The server has disconnected from the printer."}}'' octoprint/printer/Disconnected'
+    event: Disconnected
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "An unrecoverable error has been encountered.", "error": "{error}"}}'' octoprint/printer/Error'
+    event: Error
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "The state of the printer changed.", "state_id": "{state_id}", "state_string": "{state_string}"}}'' octoprint/printer/PrinterStateChanged'
+    event: PrinterStateChanged
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "A file has been uploaded through the web interface.", "name": "{name}", "path": "{path}", "target": "{target}"}}'' octoprint/file/Upload'
+    event: Upload
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "A file has been added to a storage.", "storage": "{storage}", "name": "{name}", "path": "{path}", "type": {type}}}'' octoprint/file/FileAdded'
+    event: FileAdded
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "A file has been removed from a storage.", "storage": "{storage}", "name": "{name}", "path": "{path}", "type": {type}}}'' octoprint/file/FileRemoved'
+    event: FileRemoved
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "A folder has been added to a storage.", "storage": "{storage}", "name": "{name}", "path": "{path}"}}'' octoprint/file/FolderAdded'
+    event: FolderAdded
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "A folder has been removed from a storage.", "storage": "{storage}", "name": "{name}", "path": "{path}"}}'' octoprint/file/FolderRemoved'
+    event: FolderRemoved
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "A file list was modified.", "type": "{type}"}}'' octoprint/file/UpdatedFiles'
+    event: UpdatedFiles
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "The metadata analysis of a file has started.", "name": "{name}", "path": "{path}", "origin": "{origin}"}}'' octoprint/file/MetadataAnalysisStarted'
+    event: MetadataAnalysisStarted
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "The metadata analysis of a file has finished.", "name": "{name}", "path": "{path}", "origin": "{origin}", "result": "{result}"}}'' octoprint/file/MetadataAnalysisFinished'
+    event: MetadataAnalysisFinished
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "A file has been selected for printing.", {"name": "{name}", "path": "{path}", "origin": "{origin}"}}'' octoprint/file/FileSelected'
+    event: FileSelected
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "No file is selected any more for printing"}}'' octoprint/file/FileDeselected'
+    event: FileDeselected
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "A file transfer to the printers SD has started.", {"local": "local", "remote": "remote"}}'' octoprint/file/TransferStarted'
+    event: TransferStarted
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "A file transfer to the printers SD has finished.", {"time": "{time}", "local": "{local}", "remote": "{remote}"}}'' octoprint/file/TransferDone'
+    event: TransferDone
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "A print has started.", {"name": "{name}", "path": "{path}", "origin": "{origin}", "size": "{size}", "owner": "{owner}", "user": "{user}"}}'' octoprint/printing/PrintStarted'
+    event: PrintStarted
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "A print failed.", {"name": "{name}", "path": "{path}", "origin": "{origin}", "size": "{size}", "owner": "{owner}", "time": "{time}", "reason": "{reason}"}}'' octoprint/printing/PrintFailed'
+    event: PrintFailed
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "A print completed successfully.", {"name": "{name}", "path": "{path}", "origin": "{origin}", "size": "{size}", "owner": "{owner}", "time": "{time}"}}'' octoprint/printing/PrintDone'
+    event: PrintDone
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "The print is about to be cancelled.", {"name": "{name}", "path": "{path}", "origin": "{origin}", "size": "{size}", "owner": "{owner}", "user": "{user}", "firmwareError": "{firmwareError}"}}'' octoprint/printing/PrintCancelling'
+    event: PrintCancelling
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "The print has been cancelled.", {"name": "{name}", "path": "{path}", "origin": "{origin}", "size": "{size}", "owner": "{owner}", "time": "{time}", "user": "{user}", "position": "{position}", "position.x": "{position.x}", "position.y": "{position.y}", "position.z": "{position.z}", "position.e": "{position.e}", "position.t": "{position.t}", "position.f": "{position.f}"}}'' octoprint/printing/PrintCancelled'
+    event: PrintCancelled
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "The print has been paused.", {"name": "{name}", "path": "{path}", "origin": "{origin}", "size": "{size}", "owner": "{owner}", "user": "{user}", "position": "{position}", "position.x": "{position.x}", "position.y": "{position.y}", "position.z": "{position.z}", "position.e": "{position.e}", "position.t": "{position.t}", "position.f": "{position.f}"}}'' octoprint/printing/PrintPaused'
+    event: PrintPaused
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "The print has been resumed.", {"name": "{name}", "path": "{path}", "origin": "{origin}", "size": "{size}", "owner": "{owner}", "user": "{user}"}}'' octoprint/printing/PrintResumed'
+    event: PrintResumed
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "An M80 was sent to the printer through OctoPrint"}}'' octoprint/gcode/PowerOn'
+    event: PowerOn
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "An M81 was sent to the printer through OctoPrint"}}'' octoprint/gcode/PowerOff'
+    event: PowerOff
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "A G28 was sent to the printer through OctoPrint"}}'' octoprint/gcode/Home'
+    event: Home
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "The printers Z-Height has changed"}}'' octoprint/gcode/ZChange'
+    event: ZChange
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "A G4 was sent to the printer through OctoPrint"}}'' octoprint/gcode/Dwell'
+    event: Dwell
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "One of the following commands was sent to the printer through OctoPrint: M0, M1, M226"}}'' octoprint/gcode/Waiting'
+    event: Waiting
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "An M245 was sent to the printer through OctoPrint"}}'' octoprint/gcode/Cooling'
+    event: Cooling
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "An M300 was sent to the printer through OctoPrint"}}'' octoprint/gcode/Alert'
+    event: Alert
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "An M240 was sent to the printer through OctoPrint"}}'' octoprint/gcode/Conveyor'
+    event: Conveyor
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "An M40 was sent to the printer through OctoPrint"}}'' octoprint/gcode/Eject'
+    event: Eject
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "An M112 was sent to the printer through OctoPrint"}}'' octoprint/gcode/EStop'
+    event: EStop
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "The response to an M114 was received by OctoPrint.", {"x": "{x}", "y": "{y}", "z": "{z}", "e": "{e}", "t": "{t}", "f": "{f}"}}'' octoprint/printing/PositionUpdate'
+    event: PositionUpdate
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "A tool change command was sent to the printer"}}'' octoprint/gcode/ToolChange'
+    event: ToolChange
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "A timelapse frame has started to be captured"}}'' octoprint/timelapse/CaptureStart'
+    event: CaptureStart
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "A timelapse frame has completed being captured"}}'' octoprint/timelapse/CaptureDone'
+    event: CaptureDone
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "A timelapse frame could not be captured.", {"file": "{file}", "error": "{error}"}}'' octoprint/timelapse/CaptureFailed'
+    event: CaptureFailed
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "The timelapse movie has started rendering.", {"gcode": "{gcode}", "movie": "{movie}", "movie_basename": "{movie_basename}"}}'' octoprint/timelapse/MovieRendering'
+    event: MovieRendering
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "The timelapse movie is completed.", {"gcode": "{gcode}", "movie": "{movie}", "movie_basename": "{movie_basename}"}}'' octoprint/timelapse/MovieDone'
+    event: MovieDone
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "There was an error while rendering the timelapse movie.", {"gcode": "{gcode}", "movie": "{movie}", "movie_basename": "{movie_basename}", "returncode": "{returncode}", "reason": "{reason}"}}'' octoprint/timelapse/MovieFailed'
+    event: MovieFailed
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "The slicing of a file has started.", {"stl": "{stl}", "stl_location": "{stl_location}", "gcode": "{gcode}", "gcode_location": "{gcode_location}", "progressAvailable": "{progressAvailable}"}}'' octoprint/slicing/SlicingStarted'
+    event: SlicingStarted
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "The slicing of a file has completed.", {"stl": "{stl}", "stl_location": "{stl_location}", "gcode": "{gcode}", "gcode_location": "{gcode_location}", "time": "{time}"}}'' octoprint/slicing/SlicingDone'
+    event: SlicingDone
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "The slicing of a file has been cancelled.", {"stl": "{stl}", "stl_location": "{stl_location}", "gcode": "{gcode}", "gcode_location": "{gcode_location}"}}'' octoprint/slicing/SlicingCancelled'
+    event: SlicingCancelled
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "The slicing of a file has failed.", {"stl": "{stl}", "stl_location": "{stl_location}", "gcode": "{gcode}", "gcode_location": "{gcode_location}", "reason": "{reason}"}}'' octoprint/slicing/SlicingFailed'
+    event: SlicingFailed
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "A new slicing profile was added.", {"slicer": "{slicer}", "profile": "{profile}"}}'' octoprint/slicing/SlicingProfileAdded'
+    event: SlicingProfileAdded
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "A new slicing profile was modified.", {"slicer": "{slicer}", "profile": "{profile}"}}'' octoprint/slicing/SlicingProfileModified'
+    event: SlicingProfileModified
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "A slicing profile was deleted.", {"slicer": "{slicer}", "profile": "{profile}"}}'' octoprint/slicing/SlicingProfileDeleted'
+    event: SlicingProfileDeleted
+    type: system
+  - command: 'salt-call event.fire_master ''{{"status": "The settings were updated via the REST API"}}'' octoprint/settings/SettingsUpdated'
+    event: SettingsUpdated
+    type: system
