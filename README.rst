@@ -46,6 +46,7 @@ that looks like:
       +-- _beacons/
       +-- _modules/
       +-- _proxy/
+      +-- _states/
 
 Configuration
 -------------
