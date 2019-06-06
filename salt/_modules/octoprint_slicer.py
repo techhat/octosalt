@@ -13,7 +13,7 @@ import salt.utils.http
 
 log = logging.getLogger(__name__)
 
-__virtualname__ = 'slicer'
+__virtualname__ = 'octo_slicer'
 __func_alias__ = {
     'list_': 'list'
 }
