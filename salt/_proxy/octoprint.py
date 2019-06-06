@@ -98,13 +98,6 @@ def ping():
     '''
     Is the server up?
     '''
-    try:
-        salt.utils.http.query(
-            '{0}/api/version'.format(__opts__['pillar']['proxy']['url']),
-            opts=__opts__,
-        )['body']
-    except KeyError:
-        return False
     return True
 
 
