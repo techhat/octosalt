@@ -11,7 +11,7 @@ import logging
 # Import salt libs
 import salt.utils.http
 
-__virtualname__ = 'octoprint'
+__virtualname__ = 'octoprint_job'
 
 log = logging.getLogger(__name__)
 
