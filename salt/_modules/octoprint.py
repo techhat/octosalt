@@ -164,13 +164,17 @@ def start():
     url = '{0}/api/job'.format(__opts__['pillar']['proxy']['url'])
     data = salt.utils.http.query(
         url,
-        header_dict={'X-Api-Key': __opts__['pillar']['proxy']['apikey']},
+        'POST',
+        header_dict={'X-Api-Key': __opts__['pillar']['proxy']['apikey'],
+                     'Content-type': 'application/json'},
         opts=__opts__,
-        data={'command': 'start'}
+        data=json.dumps({'command': 'start'}),
+        decode=True,
+        decode_type='json',
     )
-    if int(data['status']) != 204:
-        return False
-    return True
+    if int(data.get('status', 0)) == 204 or int(data.get('status', 0)) == 200:
+        return True
+    return False
 
 
 def stop():
@@ -188,11 +192,13 @@ def stop():
         url,
         header_dict={'X-Api-Key': __opts__['pillar']['proxy']['apikey']},
         opts=__opts__,
-        data={'command': 'stop'}
+        data={'command': 'stop'},
+        decode=True,
+        decode_type='json',
     )
-    if int(data['status']) != 204:
-        return False
-    return True
+    if int(data.get('status', 0)) == 204 or int(data.get('status', 0)) == 200:
+        return True
+    return False
 
 
 def restart():
@@ -210,11 +216,13 @@ def restart():
         url,
         header_dict={'X-Api-Key': __opts__['pillar']['proxy']['apikey']},
         opts=__opts__,
-        data={'command': 'stop'}
+        data={'command': 'stop'},
+        decode=True,
+        decode_type='json',
     )
-    if int(data['status']) != 204:
-        return False
-    return True
+    if int(data.get('status', 0)) == 204 or int(data.get('status', 0)) == 200:
+        return True
+    return False
 
 
 def pause():
@@ -232,11 +240,13 @@ def pause():
         url,
         header_dict={'X-Api-Key': __opts__['pillar']['proxy']['apikey']},
         opts=__opts__,
-        data={'command': 'pause', 'action': 'pause'}
+        data={'command': 'pause', 'action': 'pause'},
+        decode=True,
+        decode_type='json',
     )
-    if int(data['status']) != 204:
-        return False
-    return True
+    if int(data.get('status', 0)) == 204 or int(data.get('status', 0)) == 200:
+        return True
+    return False
 
 
 def resume():
@@ -254,11 +264,13 @@ def resume():
         url,
         header_dict={'X-Api-Key': __opts__['pillar']['proxy']['apikey']},
         opts=__opts__,
-        data={'command': 'pause', 'action': 'resume'}
+        data={'command': 'pause', 'action': 'resume'},
+        decode=True,
+        decode_type='json',
     )
-    if int(data['status']) != 204:
-        return False
-    return True
+    if int(data.get('status', 0)) == 204 or int(data.get('status', 0)) == 200:
+        return True
+    return False
 
 
 def job_status():
