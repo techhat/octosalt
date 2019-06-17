@@ -26,9 +26,9 @@ __virtualname__ = 'octo_file'
 
 def __virtual__():
     '''
-    Only load if the SMTP module is available in __salt__
+    Only load the module if proxy configuration is present
     '''
-    if __opts__['pillar']['proxy']['proxytype'] == 'octoprint':
+    if __opts__['pillar'].get('proxy', {}).get('proxytype', '') == 'octoprint':
         return True
     return (False, 'The OctoPrint modules cannot be loaded: proxy is not configured.')
 

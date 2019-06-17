@@ -25,9 +25,9 @@ log = logging.getLogger(__file__)
 
 def __virtual__():
     '''
-    Only return if OctoPrint is configured
+    Only load the module if proxy configuration is present
     '''
-    if __opts__['pillar']['proxy']['proxytype'] == 'octoprint':
+    if __opts__['pillar'].get('proxy', {}).get('proxytype', '') == 'octoprint':
         return True
     return (False, 'The octoprint modules cannot be loaded: proxy is not configured.')
 
