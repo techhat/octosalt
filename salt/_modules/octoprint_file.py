@@ -8,6 +8,9 @@ from __future__ import absolute_import, generators, print_function, with_stateme
 import json
 import logging
 
+# Import 3rd party libs
+import requests
+
 # Import salt libs
 import salt.utils.http
 
@@ -101,3 +104,35 @@ def _format_dir(data, path):
             else:
                 ret.append(item['name'])
     return sorted(ret)
+
+
+def upload(localfile, remotepath):
+    '''
+    Uploads a file. The path remote must include one of the following as the
+    location:
+
+        * ``local``: Uses OctoPrint's ``uploads`` folder
+        * ``sdcard``: Uses the printer's SD card
+
+    CLI Examples:
+
+    .. code-block:: bash
+
+        salt octominion file.upload <remotepath> <location/remotepath>
+        salt octominion file.upload /path/to/local/file.gco local/file.gco
+    '''
+    location = remotepath.split('/')[0]
+    url = '{0}/api/files/{1}'.format(__opts__['pillar']['proxy']['url'], location)
+    filename = localfile.split('/')[-1]
+    if localfile.endswith('.stl'):
+        mimetype = 'model/stl'
+    mimetype = 'text/plain'
+
+    ret = requests.post(
+        url,
+        headers={'X-Api-Key': __opts__['pillar']['proxy']['apikey'],},
+        files=[
+            ('file', (filename, open(localfile, 'rb'), mimetype)),
+        ],
+    ).text
+    return json.loads(ret)
