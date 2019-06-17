@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 '''
-Module for OctoPrint Slicers
+Module for OctoPrint Printer Profiles
 '''
 
 # Import python libs
@@ -50,7 +50,7 @@ def list_():
 
 def add_profile(data):
     '''
-    Add a new slicing profile.
+    Add a new printer profile.
 
     CLI Example:
 
@@ -72,7 +72,7 @@ def add_profile(data):
         opts=__opts__,
         decode=True,
         decode_type='json',
-    )['data']
+    )
 
 
 def update_profile(profile, data):
@@ -112,7 +112,7 @@ def delete_profile(profile):
 
     .. code-block:: bash
 
-        salt octominion octo_print.delete_profile myprinter
+        salt octominion octo_printer.delete_profile myprinter
     '''
     url = '{0}/api/printerprofiles/{1}'.format(
         __opts__['pillar']['proxy']['url'],
