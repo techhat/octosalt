@@ -192,8 +192,7 @@ def stop():
         header_dict={'X-Api-Key': __opts__['pillar']['proxy']['apikey']},
         opts=__opts__,
         data={'command': 'stop'},
-        decode=True,
-        decode_type='json',
+        status=True,
     )
     if int(data.get('status', 0)) == 204 or int(data.get('status', 0)) == 200:
         return True
@@ -216,8 +215,7 @@ def restart():
         header_dict={'X-Api-Key': __opts__['pillar']['proxy']['apikey']},
         opts=__opts__,
         data={'command': 'stop'},
-        decode=True,
-        decode_type='json',
+        status=True,
     )
     if int(data.get('status', 0)) == 204 or int(data.get('status', 0)) == 200:
         return True
@@ -240,8 +238,7 @@ def pause():
         header_dict={'X-Api-Key': __opts__['pillar']['proxy']['apikey']},
         opts=__opts__,
         data={'command': 'pause', 'action': 'pause'},
-        decode=True,
-        decode_type='json',
+        status=True,
     )
     if int(data.get('status', 0)) == 204 or int(data.get('status', 0)) == 200:
         return True
@@ -264,8 +261,7 @@ def resume():
         header_dict={'X-Api-Key': __opts__['pillar']['proxy']['apikey']},
         opts=__opts__,
         data={'command': 'pause', 'action': 'resume'},
-        decode=True,
-        decode_type='json',
+        status=True,
     )
     if int(data.get('status', 0)) == 204 or int(data.get('status', 0)) == 200:
         return True
