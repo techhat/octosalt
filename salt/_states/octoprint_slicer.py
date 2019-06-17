@@ -8,11 +8,13 @@ protocol
 
 .. code-block:: yaml
 
-    server-warning-message:
-      smtp.send_msg:
-        - name: 'This is a server warning message'
-        - profile: my-smtp-account
-        - recipient: admins@example.com
+    10-perc-fill-20mms:
+      octo_slicer.profile:
+        - slicer: curalegacy
+        - profile:
+            displayName: example
+            data:
+              layer_height: 0.2
 '''
 # Import Python libs
 from __future__ import absolute_import, unicode_literals, print_function
