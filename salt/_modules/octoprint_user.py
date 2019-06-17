@@ -168,5 +168,5 @@ def _format_info(data):
     '''
     return {
         'name': data['name'],
-        'passwd': data['password'],
+        'passwd': data.get('password'),
     }
