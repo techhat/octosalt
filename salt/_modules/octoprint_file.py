@@ -17,6 +17,9 @@ import salt.utils.http
 log = logging.getLogger(__name__)
 
 __virtualname__ = 'octo_file'
+__func_alias__ = {
+    'list_': 'list'
+}
 
 
 def __virtual__():
@@ -26,6 +29,27 @@ def __virtual__():
     if __opts__['pillar'].get('proxy', {}).get('proxytype', '') == 'octoprint':
         return True
     return (False, 'The octoprint modules cannot be loaded: proxy is not configured.')
+
+
+def list_():
+    '''
+    List all files, and all data (verbose).
+
+    CLI Examples:
+
+    .. code-block:: bash
+
+        salt octominion octo_file.list
+    '''
+    url = '{0}/api/files'.format(__opts__['pillar']['proxy']['url'])
+
+    return salt.utils.http.query(
+        url,
+        header_dict={'X-Api-Key': __opts__['pillar']['proxy']['apikey']},
+        opts=__opts__,
+        decode=True,
+        decode_type='json',
+    )['dict']
 
 
 def remove(path):
