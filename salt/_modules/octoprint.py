@@ -169,8 +169,7 @@ def start():
                      'Content-type': 'application/json'},
         opts=__opts__,
         data=json.dumps({'command': 'start'}),
-        decode=True,
-        decode_type='json',
+        status=True,
     )
     if int(data.get('status', 0)) == 204 or int(data.get('status', 0)) == 200:
         return True
